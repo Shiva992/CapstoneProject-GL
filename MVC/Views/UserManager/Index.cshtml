@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+
+<h2 class="text-light text-center">User Manager</h2>
+
+<script src="~/Scripts/UserManagerJavaScript.js"></script>
+
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">FullName</th>
+            <th scope="col">EmailId</th>
+            <th scope="col">ContactNo</th>
+            <th scope="col">Gender</th>
+            <th scope="col">City</th>
+            <th scope="col">Password</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody id="UserManagerBody">
+    </tbody>
+</table>
+
+<div class="modal fade" id="UserEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EDIT </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="FullName3" name="FullName" type="text" placeholder="Enter Name" />
+                            <span class="text-danger" style="display:none;">Please enter FullName</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="EmailId3" name="Email" type="email" placeholder="Enter Email" />
+                            <span class="text-danger" style="display:none;">Please enter Email Id</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="ContactNo3" name="Contact" type="number" placeholder="Enter contact Number" />
+                            <span class="text-danger" style="display:none;">Please enter Contact</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="row py-2">
+                            <label class="col-lg-6">Gender:</label>
+                            <div class="form-check col-lg-3">
+                                <input class="form-check-input" type="radio" name="radioo3" id="flexRadioDefault1" value="Male" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">Male</label>
+                            </div>
+                            <div class="form-check col-lg-3">
+                                <input class="form-check-input" type="radio" name="radioo3" id="flexRadioDefault23" value="Female">
+                                <label class="form-check-label" for="flexRadioDefault23">Female</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="City3" name="City" type="text" placeholder="Enter City" />
+                            <span class="text-danger" style="display:none;">Please enter City</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Password3" name="Password" type="password" placeholder="Enter Password" />
+                            <span class="text-danger" style="display:none;">Please enter Password</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Roles3" name="Roles" type="text" placeholder="Enter Password" hidden />
+                        </div>
+                    </div>
+
+                    <div class="mx-auto d-grid col">
+                        <input id="EditUser" type="button" value="EDIT" onclick="editUserManage();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

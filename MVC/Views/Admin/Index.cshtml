@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+<div class="text-light text-center">
+    <h2>Hello Admin</h2>
+    <label id="hiAdmin" class="fw-bolder"></label>
+</div>
+
+<script>
+    $('#hiAdmin').text(localStorage.getItem("email"));
+</script>
+

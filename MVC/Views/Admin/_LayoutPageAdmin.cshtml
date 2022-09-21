@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script>
+        function logoutAdmin() {
+
+            localStorage.clear();
+            window.location.href = "https://localhost:44312/Users/Index"
+        }
+
+    </script>
+</head>
+<body style="background:#696969">
+
+
+    <nav class="navbar bg-light">
+        <div class="container">
+
+            @Html.ActionLink("Admin Page", "Index", "Admin", null, new { @class = "navbar-brand" })
+
+
+
+            @Html.ActionLink("Cars Mange", "Cars", "Admin", null, new { @class = "btn btn-dark ms-0" })
+            @Html.ActionLink("User Manage", "Index", "UserManager", null, new { @class = "btn btn-dark ms-3" })
+            @Html.ActionLink("Contact Us", "ContactIndex", "Contact", null, new { @class = "btn btn-dark ms-3" })
+            @Html.ActionLink("Booking", "BookingAdmin", "Admin", null, new { @class = "btn btn-dark  ms-3" })
+            <button type="button" class="btn btn-outline-dark me-lg-2 px-3" onclick="logoutAdmin();">
+                Logout
+            </button>
+
+
+
+        </div>
+    </nav>
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+
+
+
+    <script>
+        if (localStorage.getItem('token') == null) {
+            window.location.href = "https://localhost:44312/Users/Index"
+        }
+    </script>
+
+    <script src="~/Scripts/bootstrap.js"></script>
+</body>
+</html>

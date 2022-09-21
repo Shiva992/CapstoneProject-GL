@@ -1,0 +1,247 @@
+﻿@*@model IEnumerable<MVC.Models.CarsDetail>*@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<style>
+    .card:hover {
+        box-shadow: -1px 9px 40px -12px #808080
+    }
+</style>
+
+<script src="~/Scripts/UserJavaScript.js"></script>
+<script src="~/Scripts/RegisterJavaScript.js"></script>
+<script>
+    $('.card').hover(
+        function () {
+            $(this).animate({
+                marginTop: "-=1%",
+                marginBottom: "+=1%"
+            }, 200)
+        },
+        function () {
+            $(this).animate({
+                marginTop: "+=1%",
+                marginBottom: "-=1%"
+            })
+        }
+    )
+
+
+
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44350/ShowCars",
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var elem =
+                    $.each(data, function (i, item) {
+
+                        console.log(item.Id);
+                        var row = "<div class ='card w-75 p-3 d-flex justify-content-center'>" + "<div class='card-body'><p>Title:   " + item.Title + "</p><p>Brand:   " + item.Brand + "</p><p>Price Per Day:   " + item.PricePerDay + "</p><p>Model Year:   " + item.ModelYear + "</p><p>Fuel Type:   " + item.FuelType + "</p><p>Description:   " + item.Description + "</p></div><div class='card-footer'><input type='button' id='btnBook90' class='btn btn-dark' value='Book Now' onclick='' hidden /></div>"
+                            + "</div>"
+
+                        $('#cardDisplay').append(row);
+
+                    });
+
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+
+
+        });
+
+
+    });
+
+</script>
+
+
+
+<div class="w-100 p-2 h-50 ">
+    <img src="~/Image/home1.jpg" class="img-fluid" alt="...">
+
+</div>
+
+<div class="text-center mt-5">
+    <h1 class="display-4 text-center"> Our Services</h1>
+    <hr class=" w-50 mx-auto mt-3 mb-3" />
+</div>
+
+
+<div class="card-group p-5">
+    <div class="card text-white bg-dark mb-3">
+        <img src="https://media.istockphoto.com/photos/happy-traveler-waiting-for-the-flight-in-airport-picture-id639318992?b=1&k=20&m=639318992&s=170667a&w=0&h=7mijYHxIwrfDS__qVCuuXpvStYDvBQhxps6UXQfeG9o=" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Airport Transfer</h5>
+            <p class="card-text">Provide you best and fast service so that you can fly high to achive your dream</p>
+        </div>
+    </div>
+    <div class="card text-white bg-dark mb-3">
+        <img src="https://media.istockphoto.com/photos/car-rental-sign-picture-id467103541?b=1&k=20&m=467103541&s=170667a&w=0&h=lEggnWd4gHo1uNXOSH47sP-cJDyk7XYuUqOIVyIWFLM=" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Bussiness Transport</h5>
+            <p class="card-text">Provide you best and safe transportation service from your work place as your loved onces are waiting for you </p>
+        </div>
+    </div>
+    <div class="card text-white bg-dark mb-3">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnQlMjB0cmFuc2ZlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Events & Weedings</h5>
+            <p class="card-text"> special ride for your special day.</p>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="text-center ">
+    <h1 class="display-4 text-center"> Catalog</h1>
+    <hr class=" w-50 mx-auto mt-3 mb-3" />
+</div>
+
+<div class="row container d-flex justify-content-center" id="cardDisplay">
+
+
+</div>
+<div class="text-center mt-5">
+    <h1 class="display-4 text-center"> Why To Choose Us</h1>
+    <hr class=" w-50 mx-auto mt-3 mb-3" />
+</div>
+
+<div class="container-fluid" id="AboutUs">
+    <p class="fs-3 ">
+
+        we offer the most affordable variety of car rental services anywhere in the world. However, the trust of our customers is of utmost importance to us and for this reason, we only use the most reputable car rental brands in each location and with this in mind, rest assured that we promise an entirely unbiased car rental service and one that always has you covered.
+    </p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="FullName" name="FullName" type="text" placeholder="Enter Name"  />
+                            <span class="text-danger" style="display:none;">Please enter Full Name</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="EmailId" name="Email" type="email" placeholder="Enter Email" />
+                            <span class="text-danger" style="display:none;">Please enter Email Id</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="ContactNo" name="Contact" type="number" placeholder="Enter contact Number" />
+                            <span class="text-danger" style="display:none;">Please enter Contact</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="row py-2">
+                            <label class="col-lg-6">Gender:</label>
+                            <div class="form-check col-lg-3">
+                                <input class="form-check-input" type="radio" name="radioo" id="flexRadioDefault1" value="Male" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">Male</label>
+                            </div>
+                            <div class="form-check col-lg-3">
+                                <input class="form-check-input" type="radio" name="radioo" id="flexRadioDefault2" value="Female">
+                                <label class="form-check-label" for="flexRadioDefault2">Female</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="City" name="City" type="text" placeholder="Enter City" />
+                            <span class="text-danger" style="display:none;">Please enter City</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Password" name="Password" type="password" placeholder="Enter Password" />
+                            <span class="text-danger" style="display:none;">Please enter Password</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Roles" name="Roles" type="text" placeholder="Enter Password" hidden />
+                            
+                        </div>
+                    </div>
+                    <div class="mx-auto d-grid col">
+                        <input id="Register" type="button" value="Register" onclick="RegisterUser();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="username" name="username" type="email" placeholder="Enter Email" />
+                        <span class="text-danger" style="display:none;">Please enter User Name</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Password2" name="Passwordd" type="password" placeholder="Enter Password" />
+                            <span class="text-danger" style="display:none;">Please enter Password</span>
+                        </div>
+                    </div>
+                    <div class="mx-auto d-grid col">
+                        <input id="Login" type="button" value="Login" onclick="AdminFun();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

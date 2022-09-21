@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "Cars";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+
+<h2 class="text-light text-center"> Car Manager</h2>
+<script src="~/Scripts/CarsJavaScript.js"></script>
+
+<div>
+
+    <button type="button" id="Add" data-bs-toggle="modal" data-bs-target="#CarAddModal" class="btn btn-primary">Add Cars</button>
+
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Brand</th>
+                <th scope="col">PricePerDay</th>
+                <th scope="col">FuelType</th>
+                <th scope="col">ModelYear</th>
+                <th scope="col">Description</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody id="CarBody">
+        </tbody>
+    </table>
+
+</div>
+
+<div class="modal fade" id="CarAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD CAR</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Title" name="Title" type="text" placeholder="Enter Title" />
+                        <span class="text-danger" style="display:none;">Please enter Title</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Brand" name="Brand" type="text" placeholder="Enter Brand" />
+                            <span class="text-danger" style="display:none;">Please enter Brand</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="PricePerDay" name="PricePerDay" type="text" placeholder="Enter PricePerDay" />
+                            <span class="text-danger" style="display:none;">Please enter Price Per Day</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="FuelType" name="FuelType" type="text" placeholder="Enter FuelType" />
+                            <span class="text-danger" style="display:none;">Please enter Fuel Type</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="ModelYear" name="Modelyear" type="text" placeholder="Enter Model Year" />
+                            <span class="text-danger" style="display:none;">Please enter Model year</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <div class="mb-3">
+                                <label for="Description" class="form-label"></label>
+                                <textarea class="form-control" id="Description" rows="3" placeholder="Enter Car Description"></textarea>
+                                <span class="text-danger" style="display:none;">Please enter Description</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mx-auto d-grid col">
+                        <input id="AddCar" type="button" value="ADD" onclick="CreateCar();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="CarEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EDIT CAR</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Title1" name="Title" type="text" placeholder="Enter Title" />
+                            <span class="text-danger" style="display:none;">Please enter Title</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Brand1" name="Brand" type="text" placeholder="Enter Brand" />
+                            <span class="text-danger" style="display:none;">Please enter Brand</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="PricePerDay1" name="PricePerDay" type="text" placeholder="Enter PricePerDay" />
+                            <span class="text-danger" style="display:none;">Please enter Price Per Day</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="FuelType1" name="FuelType" type="text" placeholder="Enter FuelType" />
+                            <span class="text-danger" style="display:none;">Please enter Fuel Type</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="ModelYear1" name="Modelyear" type="text" placeholder="Enter Model Year" />
+                            <span class="text-danger" style="display:none;">Please enter Model Year</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <div class="mb-3">
+                                <label for="Description1" class="form-label"></label>
+                                <textarea class="form-control" id="Description1" rows="3" placeholder="Enter Car Description"></textarea>
+                                <span class="text-danger" style="display:none;">Please enter Description</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mx-auto d-grid col">
+                        <input id="EditCAR" type="button" value="EDIT" onclick="editCar();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>

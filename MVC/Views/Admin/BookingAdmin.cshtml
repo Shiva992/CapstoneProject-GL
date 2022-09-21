@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "BookingAdmin";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+
+<h2 class="text-light text-center">Booking</h2>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">Cars Id</th>
+            <th scope="col">From Date</th>
+            <th scope="col">To Date</th>
+            <th scope="col">Fees</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody id="BookingAdminBody">
+    </tbody>
+</table>
+
+
+
+<script>
+
+    function deleteBooking(id) {
+
+        DeleteData();
+        function DeleteData() {
+            $.ajax({
+                type: "Delete",
+                url: "https://localhost:44350/BookingDelete/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    alert("Deleted");
+
+                }
+
+            });
+            location.reload();
+        }
+    }
+
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44350/BookingRead",
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var elem =
+                    $.each(data, function (i, item) {
+                        console.log(item.Id);
+                        var row = "<tr>"
+                            + "<td>" + item.UserId + "</td>"
+                            + "<td>" + item.CarsId + "</td>"
+                            + "<td>" + item.FromDate + "</td>"
+                            + "<td>" + item.ToDate + "</td>"
+                            + "<td>" + item.Fees + "</td>"
+                            + "<td>" + '<button type="button" /*id="Delete"*/  class="btn btn-danger" onclick="deleteBooking(' + item.Id + ') " > Delete </button > ' + "</td>"
+                            + "</tr>";
+                        $('#BookingAdminBody').append(row);
+
+                    });
+
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+
+
+        });
+
+
+    });
+
+</script>

@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "AfterLogin";
+    Layout = "~/Views/Users/_LayoutPageUser.cshtml";
+}
+<script src="~/Scripts/UserJavaScript.js"></script>
+
+<h2 class="text-center">Book Now</h2>
+
+@*<label id="lbllogout"> </label>*@
+<style>
+    .card:hover {
+        box-shadow: -1px 9px 40px -12px #808080
+    }
+</style>
+
+<script>
+    
+    var GlobalBookId = 0;
+    function UpdateId(id) {
+        GlobalBookId = id;
+    }
+
+    $('.card').hover(
+        function () {
+            $(this).animate({
+                marginTop: "-=1%",
+                marginBottom: "+=1%"
+            }, 200)
+        },
+        function () {
+            $(this).animate({
+                marginTop: "+=1%",
+                marginBottom: "-=1%"
+            })
+        }
+    )
+
+
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44350/ShowCars",
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (data) {
+              // var str = JSON.stringify(data)
+                console.log(data);
+                var elem =
+                    $.each(data, function (i, item) {
+                        
+                        console.log(item.Id);
+                        var row = "<div class ='card w-75 p-3 d-flex justify-content-center'>" + "<div class='card-body'><p>Title:   " + item.Title + "</p><p>Brand:   " + item.Brand + "</p><p>Price Per Day:   " + item.PricePerDay + "</p><p>Model Year:   " + item.ModelYear + "</p><p>Fuel Type:   " + item.FuelType + "</p><p>Description:   " + item.Description + "</p></div><div class='card-footer'><input type='button' id='btnBook' class='btn btn-dark' value='Book Now' data-bs-toggle='modal' data-bs-target='#BookNowModal'onclick='UpdateId("+item.Id+");' /></div>"
+                            + "</div>"
+
+                        $('#cardDisplay').append(row);
+
+                    });
+
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+
+
+        });
+
+
+    });
+
+    //var date = new Date('$("#FromDate)"');
+    //var newDate = date.toString('dd-MM-yy');
+    
+    function PlaceOrder() {
+        var return_val = true;
+        if ($('#Fees').val().trim() == '') {
+            $('#Fees').next('span').show();
+            return_val = false;
+        } else {
+            $('#Fees').next('span').hide();
+            return_val = true;
+        }
+
+        if ($('#FromDate').val().trim() == '') {
+            $('#FromDate').next('span').show();
+            return_val = false;
+        } else {
+            $('#FromDate').next('span').hide();
+            return_val = true;
+        }
+
+        if ($('#ToDate').val().trim() == '') {
+            $('#ToDate').next('span').show();
+            return_val = false;
+        } else {
+            $('#ToDate').next('span').hide();
+            return_val = true;
+        }
+
+        if (!return_val) {
+            return return_val;
+        }
+        var obj = {
+            
+            UserId: localStorage.getItem('Id'),
+            CarsId: GlobalBookId,
+            FromDate: $('#FromDate').val(),
+            ToDate: $('#ToDate').val(),
+            Fees: $('#Fees').val()
+
+        }
+        console.log(obj);
+        var str = JSON.stringify(obj);
+       // console.log(str);
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44350/BookingCreate",
+            data: str,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (str) {
+                console.log(str);
+                alert("Data has been added successfully.");
+                $('#BookNowModal').modal('hide')
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+    // location.reload();
+
+    };
+
+
+
+
+
+
+    /*  $('#lbllogout').text(localStorage.getItem("email"));*/
+
+</script>
+
+
+<div class="row container d-flex justify-content-center" id="cardDisplay">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="BookNowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book CAR</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="CarsId" name="CarsId" type="text" placeholder="Enter Brand" hidden />
+                     
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                           From:  <input id="FromDate" class="form-control" name="FromDate" type="date" placeholder="From " />
+                                  <span class="text-danger" style="display:none;">Please enter Form Date</span>
+                        </div>
+                    </div>
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            To: <input id="ToDate" class="form-control" name="ToDate" type="date" placeholder="To " />
+                            <span class="text-danger" style="display:none;">Please enter To Date</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="Fees" name="Fees" type="text" placeholder="Enter Fees" />
+                            <span class="text-danger" style="display:none;">Please enter Fees</span>
+                        </div>
+                    </div>
+
+                    <div class="row px-2 py-2">
+                        <div class="col py-2">
+                            <input class="form-control" id="UserId" name="UserId" type="text" placeholder="Enter Id" hidden />
+                        </div>
+                    </div>
+
+                    <div class="mx-auto d-grid col">
+                        <input id="EditCAR" type="button" value="Place Order" onclick="PlaceOrder();" class="btn btn-dark" />
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>

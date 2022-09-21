@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Users/_LayoutPageUser.cshtml";
+}
+
+
+
+
+<!--Section: Contact v.2-->
+<section class="mb-4 container">
+
+    <!--Section heading-->
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Feedback</h2>
+    <!--Section description-->
+    
+
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-9 mb-md-0 mb-5">
+
+            @using (Html.BeginForm())
+            {
+
+                <div class="row px-2 py-2">
+                    <div class="col py-2">
+                        <input class="form-control" id="feedbackName" name="FullName" type="text" placeholder="Enter Name" />
+                        <span class="text-danger" style="display:none;">Please enter Full Name</span>
+                    </div>
+                </div>
+                <div class="row px-2 py-2">
+                    <div class="col py-2">
+                        <input class="form-control" id="feedbackEmail" name="Email" type="email" placeholder="Enter Email" />
+                        <span class="text-danger" style="display:none;">Please enter Email</span>
+                    </div>
+                </div>
+
+                <div class="row px-2 py-2">
+                    <div class="col py-2">
+                        <div class="mb-3">
+                            <label for="Description" class="form-label"></label>
+                            <textarea class="form-control" id="feedbackComment" rows="3" placeholder="Enter Feedback"></textarea>
+                            <span class="text-danger" style="display:none;">Please enter Feedback</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-auto d-grid col">
+                    <input type="button" value="Feedback" onclick="CreateFeedbackDetails();" class="btn btn-dark" />
+                </div>
+            }
+
+        </div>
+    </div>
+
+        
+</section>
+
+<script>
+
+    function CreateFeedbackDetails() {
+
+        var return_val = true;
+
+
+        if ($('#feedbackName').val().trim() == '') {
+            $('#feedbackName').next('span').show();
+            return_val = false;
+        } else {
+            $('#feedbackName').next('span').hide();
+            return_val = true;
+        }
+
+
+
+        if ($('#feedbackEmail').val().trim() == '') {
+            $('#feedbackEmail').next('span').show();
+            return_val = false;
+        } else {
+            $('#feedbackEmail').next('span').hide();
+            return_val = true;
+        }
+
+
+        if ($('#feedbackComment').val().trim() == '') {
+            $('#feedbackComment').next('span').show();
+            return_val = false;
+        } else {
+            $('#feedbackComment').next('span').hide();
+            return_val = true;
+        }
+
+
+
+        if (!return_val) {
+            return return_val;
+        }
+
+
+        var obj = {
+
+            Name: $('#feedbackName').val(),
+            Email: $('#feedbackEmail').val(),
+            Comment: $('#feedbackComment').val()
+        };
+        var str = JSON.stringify(obj);
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44350/FeedbackCreate",
+            data: str,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+
+                window.location.href = "https://localhost:44312/Users/AfterLogin";
+            },
+            error: function () {
+                //alert("Error while inserting data");
+                window.location.href = "https://localhost:44312/Users/AfterLogin";
+            }
+        })
+    }
+
+</script>

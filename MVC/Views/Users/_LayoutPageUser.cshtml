@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/MyProfileJavaScript.js"></script>
+    <script src="~/Scripts/UserJavaScript.js"></script>
+    <script>
+        function logout() {
+
+            localStorage.clear();
+            window.location.href = "https://localhost:44312/Users/Index"
+        }
+
+    </script>
+</head>
+<body class="font-monospace">
+
+    <div>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Car Rental</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Users", null, new { @class = "btn btn-outline-dark ms-3" })
+                       
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Contact Us", "ContactUserIndex", "Contact", null, new { @class = "btn btn-outline-dark ms-3" })
+                        </li>
+                       
+                        <li class="nav-item">
+                            @Html.ActionLink("FeedBack", "Feedback", "Users", null, new { @class = "btn btn-outline-dark ms-3" })
+                        </li>
+                    </ul>
+                    <div class="d-flex" @*role=""*@>
+
+                        <button type="button" class="btn btn-outline-dark me-lg-2 px-3" data-bs-toggle="modal" data-bs-target="#MyProfileModal" onclick="checkUserProfile(localStorage.getItem('Id'))">
+                            My Profile
+                        </button>
+                        <button type="button" class="btn btn-outline-dark me-lg-2 px-3" onclick="logout();">
+                            Logout
+                        </button>
+                        
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div>
+
+        @RenderBody()
+
+
+
+
+    </div>
+
+
+
+    <div class="modal fade" id="MyProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">EDIT </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="FullName4" name="FullName" type="text" placeholder="Enter Name" />
+                                <span class="text-danger" style="display:none;">Please enter FullName</span>
+                            </div>
+                        </div>
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="EmailId4" name="Email" type="email" placeholder="Enter Email" />
+                                <span class="text-danger" style="display:none;">Please enter Email Id</span>
+                            </div>
+                        </div>
+
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="ContactNo4" name="Contact" type="number" placeholder="Enter contact Number" />
+                                <span class="text-danger" style="display:none;">Please enter Contact Number</span>
+                            </div>
+                        </div>
+                        <div class="row px-2 py-2">
+                            <div class="row py-2">
+                                <label class="col-lg-6">Gender:</label>
+                                <div class="form-check col-lg-3">
+                                    <input class="form-check-input" type="radio" name="radioo4" id="flexRadioDefault1" value="Male" checked>
+                                    <label class="form-check-label" for="flexRadioDefault1">Male</label>
+                                </div>
+                                <div class="form-check col-lg-3">
+                                    <input class="form-check-input" type="radio" name="radioo4" id="flexRadioDefault23" value="Female">
+                                    <label class="form-check-label" for="flexRadioDefault23">Female</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="City4" name="City" type="text" placeholder="Enter City" />
+                                <span class="text-danger" style="display:none;">Please enter City</span>
+                            </div>
+                        </div>
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="Password4" name="Password" type="password" placeholder="Enter Password" />
+                                <span class="text-danger" style="display:none;">Please enter Password</span>
+                            </div>
+                        </div>
+                        <div class="row px-2 py-2">
+                            <div class="col py-2">
+                                <input class="form-control" id="Roles4" name="Roles" type="text" placeholder="Enter Password" hidden />
+                              
+                            </div>
+                        </div>
+
+                        <div class="mx-auto d-grid col">
+                            <input id="EditUser3" type="button" value="EDIT" onclick="editMyProfile();" class="btn btn-dark" />
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+ 
+        <script>
+            if (localStorage.getItem('token') == null) {
+                window.location.href = "https://localhost:44312/Users/Index"
+            }
+    </script>
+    
+</body>
+</html>
